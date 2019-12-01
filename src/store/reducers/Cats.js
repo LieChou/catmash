@@ -5,7 +5,7 @@ import * as types from '../action/types/Cats';
 const cats = (state = {
     loading: false,
     error: false,
-    cats: [],
+    cats: null,
     cat: null,
     catSelected: null
 }, action) => {
@@ -37,6 +37,9 @@ const cats = (state = {
                 cats: action.cats
             };
 
+        default:
+            return state;
+
 
         //////////////////////////// GET CAT ////////////////////////////////
 
@@ -48,5 +51,6 @@ const cats = (state = {
 
 }
 
+export default cats;
 
 

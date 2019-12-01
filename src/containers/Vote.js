@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-//import action to dispatch to getAllCats
+import { connect } from 'react-redux';
+import { getCats } from '../store/action/creators/Cats'
 
-export default class Vote extends Component {
+
+
+class Vote extends Component {
 
     // constructor(props) {
     //     super(props);
@@ -17,10 +19,10 @@ export default class Vote extends Component {
 
     // let cat2 = Math.floor(Math.random() * database.length);
 
-    //update Store with infos
-    //dispatch printedCats action
+    // update Store with infos
+    // dispatch printedCats action
 
-    //reset database for next round
+    // reset database for next round
 
     // }
 
@@ -28,13 +30,19 @@ export default class Vote extends Component {
         this.props.history.push('/rank');
     };
 
+    getCats = () => {
+        this.props.getCats();
+
+    }
+
 
     render() {
+        console.log(this.props.cats)
         return (
             <div>
                 <div>
                     <p>Vote</p>
-                    {/* logo and header */}
+                    <button onClick={this.getCats} type="button" className="btn btn-info">Get Cats</button>
                 </div>
 
                 {/* printed 2 cats */}
@@ -47,6 +55,10 @@ export default class Vote extends Component {
                     </button>
 
                 </div>
+                {/* <div>
+                    <button type="button" className="btn btn-info" onClick={this.getCats}>Voir les données</button>
+                </div > */}
+
 
                 <div>
                     <button type="button" className="btn btn-info" onClick={this.goToRanking}>Voir le classement</button>
@@ -58,8 +70,14 @@ export default class Vote extends Component {
 
 }
 
-// const mapDispatchToProps = dispatch => ({
-//     getCats: () => dispatch(getCats()),
-// })
+const mapStateToProps = (state) => {
+    return {
+        cats: state.cats.cats
+    }
+}
 
-// export default connect(mapDispatchToProps)(Vote);
+const mapDispatchToProps = dispatch => ({
+    getCats: () => dispatch(getCats()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Vote);

@@ -5,15 +5,24 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Router } from 'react-router-dom';
 import * as createHistory from "history";
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import rootReducer from './store/reducers/RootReducer';
+// import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+// import { reduxFirestore, getFirestore } from 'redux-firestore';
+// import db from './config/ConfigFirebase';
 
 const history = createHistory.createBrowserHistory();
 
 const store = createStore(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    rootReducer,
+    compose(
+        applyMiddleware(thunk),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+        // reduxFirestore(db),
+        // reactReduxFirebase(db)
+    )
 )
 
 

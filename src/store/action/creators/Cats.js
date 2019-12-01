@@ -1,7 +1,6 @@
 import * as types from '../types/Cats';
-import axios from 'axios';
-import apiFirebase from '../../../Config';
-
+import db from '../../../config/ConfigFirebase';
+import catsJson from '../../../config/cats.json';
 
 
 //////////////////////////// GET ALL CATS ////////////////////////////////
@@ -12,9 +11,10 @@ const getAllCatsRequested = () => {
     }
 }
 
-const getAllCatsSucces = () => {
+const getAllCatsSucces = (cats) => {
     return {
-        type: types.GET_ALL_CATS_SUCCESS
+        type: types.GET_ALL_CATS_SUCCESS,
+        cats: cats
     }
 }
 
@@ -24,20 +24,46 @@ const getAllCatsError = () => {
     }
 }
 
+
 const getAllCats = () => {
-    dispatch(getAllCatsRequested());
-    axios.get(`${'https://cors-anywhere.herokuapp.com/'}${apiFirebase}`)
-        .then(response => responseJson)
-        .then((reponseJson) => {
-            if (responseJson["@type"] === "hydra:Error") {
-                console.error(responsejson);
-                dispatchEvent(getAllCatsError());
-            } else {
-                console.log(responseJson);
-                dispatch(getAllCatsSucces());
-            }
-        })
-        .catch((error) => { console.error(errror); dispatch(getAllCatsError) })
+
+    return dispatch => {
+        dispatch(getAllCatsRequested());
+        db.collection('cats').get()
+            .then((cats) => {
+                if (cats.size === 0) {
+                    (catsJson['images']).forEach((cat) => {
+                        console.log(cat['id']);
+                        db.collection('cats').doc(cat['id']).set({
+                            imageUrl: cat['url'],
+                            gameNumber: 0,
+                            points: 0,
+                        })
+                    })
+                    db.collection('cats').get().then((snapshot) => {
+                        let cats = [];
+                        snapshot.docs.forEach(doc => {
+                            let cat = doc.data();
+                            cats.push(cat);
+                        })
+                        dispatch(getAllCatsSucces(cats))
+                    })
+                }
+                db.collection('cats').get().then((snapshot) => {
+                    let cats = [];
+                    snapshot.docs.forEach(doc => {
+                        let cat = doc.data();
+                        cats.push(cat);
+                    })
+                    dispatch(getAllCatsSucces(cats))
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(getAllCatsError())
+            })
+    }
+
 }
 
 
