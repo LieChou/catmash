@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import Vote from './containers/Vote';
-import Ranking from './containers/Ranking';
+import Vote from './containers/vote/Vote';
+import Ranking from './containers/ranking/Ranking';
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import { getCats } from './store/action/creators/Cats';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCats } from '../store/action/creators/Cats';
+import { getCats } from '../../store/action/creators/Cats';
+import VoteStyle from './Vote.module.scss';
 
 
 class Vote extends Component {
@@ -13,9 +14,7 @@ class Vote extends Component {
             cat1: [],
             cat2: []
         }
-
     }
-
 
     getRandomCats = () => {
         //get all cats 
@@ -55,18 +54,30 @@ class Vote extends Component {
 
         return (
 
-            <div>
-                <div>
-                    <p>Votez pour le chat le plus mignon ! </p>
+            <div className={VoteStyle.container}>
+                <div className={VoteStyle.header}>
+                    <div className={VoteStyle.titleDiv}>
+                        <p className={VoteStyle.titleElement}>Votez pour le chat le plus mignon !</p>
+                    </div>
+                    <div className={VoteStyle.logoDiv}>
+                        <img className={VoteStyle.logoElement} src={require('../../assets/pawprints.svg')} alt="catpawprints" />
+                    </div>
                 </div>
 
-                <div>
-                    <button>
-                        <img alt="cat1" src={cat1.imageUrl} />
+                <div className={VoteStyle.section1}>
+                    <button className={VoteStyle.picDiv}>
+                        <img className={VoteStyle.picElement} alt="cat1" src={cat1.imageUrl} />
                     </button>
-                    <button>
-                        <img alt="cat1" src={cat2.imageUrl} />
+                </div>
+
+                <div className={VoteStyle.section2}>
+                    <button className={VoteStyle.picDiv}>
+                        <img className={VoteStyle.picElement} alt="cat1" src={cat2.imageUrl} />
                     </button>
+                </div>
+
+                <div className={VoteStyle.rankingButtonDiv}>
+                    <button className={VoteStyle.rankingButtonElement} onClick={this.goToRanking}>Voir le classement</button>
                 </div>
             </div>
         )
