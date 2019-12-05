@@ -2,21 +2,46 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Vote from './containers/Vote';
 import Ranking from './containers/Ranking';
+import { connect } from 'react-redux';
+import Loading from './Loading';
+import { getCats } from './store/action/creators/Cats';
+
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.props.getCats();
+    }
+
     render() {
         return (
+
             <Router>
-                <Switch>
-                    <Route exact path="/vote" component={Vote} />
-                    <Route exact path="/rank" component={Ranking} />
-                    <Redirect from="*" to="vote" />
-                </Switch>
+                {
+                    this.props.cats ?
+                        <Switch>
+                            <Route exact path="/vote" component={Vote} />
+                            <Route exact path="/rank" component={Ranking} />
+                            <Redirect from="*" to="vote" />
+                        </Switch>
+                        :
+                        < Loading />
+                }
             </Router>
         )
     }
-
 }
 
-export default App; 
+const mapStateToProps = (state) => {
+    return {
+        cats: state.cats.cats,
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    getCats: () => dispatch(getCats()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App); 

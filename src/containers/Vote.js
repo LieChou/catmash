@@ -1,78 +1,82 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCats } from '../store/action/creators/Cats'
-
+import { getCats } from '../store/action/creators/Cats';
 
 
 class Vote extends Component {
 
-    // constructor(props) {
-    //     super(props);
+    constructor(props) {
+        super(props);
 
-    //display 2 random cats
-    // let viewedCats = [];
-    // let cat1 = Math.floor(Math.random() * database.length);
+        this.state = {
+            cats: [],
+            cat1: [],
+            cat2: []
+        }
 
-    //make sure they are not the same
-    // let splicedCat = database.splice(car1, 1)[0];
-    // viewedCats.push(splicedCat);
+    }
 
-    // let cat2 = Math.floor(Math.random() * database.length);
 
-    // update Store with infos
-    // dispatch printedCats action
+    getRandomCats = () => {
+        //get all cats 
+        let cats = this.props.cats;
 
-    // reset database for next round
+        //create random cat1
+        let cat1Id = Math.floor(Math.random() * cats.length);
+        let cat1 = cats[cat1Id];
+        console.log(cat1);
 
-    // }
+        //take cat1 out to make sure it won't appear again
+        let splicedCat = cats.splice(cat1Id, 1)[0];
+        let viewedCat = [];
+        viewedCat.push(splicedCat);
+
+        //create random cat2
+        let cat2Id = Math.floor(Math.random() * cats.length);
+        let cat2 = cats[cat2Id];
+        console.log(cat2);
+        const randomCats = { cat1, cat2 }
+        return (
+            randomCats
+        )
+    }
 
     goToRanking = () => {
         this.props.history.push('/rank');
     };
 
-    getCats = () => {
-        this.props.getCats();
-
-    }
 
 
     render() {
-        console.log(this.props.cats)
+        console.log(this.props.cats);
+        const { cat1, cat2 } = this.getRandomCats();
+        console.log(cat1)
+        console.log(cat2)
+
         return (
+
             <div>
                 <div>
-                    <p>Vote</p>
-                    <button onClick={this.getCats} type="button" className="btn btn-info">Get Cats</button>
+                    <p>Votez pour le chat le plus mignon ! </p>
                 </div>
 
-                {/* printed 2 cats */}
                 <div>
                     <button>
-                        <img alt="cat1" />
+                        <img alt="cat1" src={cat1.imageUrl} />
                     </button>
                     <button>
-                        <img alt="cat2" />
+                        <img alt="cat1" src={cat2.imageUrl} />
                     </button>
-
                 </div>
-                {/* <div>
-                    <button type="button" className="btn btn-info" onClick={this.getCats}>Voir les données</button>
-                </div > */}
-
-
-                <div>
-                    <button type="button" className="btn btn-info" onClick={this.goToRanking}>Voir le classement</button>
-                </div >
-
             </div>
         )
     }
-
 }
+
 
 const mapStateToProps = (state) => {
     return {
-        cats: state.cats.cats
+        cats: state.cats.cats,
     }
 }
 
