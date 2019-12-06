@@ -72,6 +72,51 @@ export const getCats = () => (dispatch) => {
 }
 
 
-
 //////////////////////////// UPDATE CAT /////////////////////////////
 
+const updateCatRequested = () => {
+    return {
+        type: types.UPDATE_CAT_REQUESTED
+    }
+}
+
+const updateCatSuccess = (cats) => {
+    return {
+        type: types.UPDATE_CAT_SUCCESS,
+        cats: cats
+    }
+}
+
+const updateCatError = () => {
+    return {
+        type: types.UPDATE_CAT_ERROR
+    }
+}
+
+
+const updateCatFighting = (data) => {
+    return dispatch => {
+        dispatch(updateCatRequested());
+        db.collection('cats').get()
+            .then(querySnapshot => {
+                querySnapshot.docs.map(doc => {
+                    if (doc.imageUrl === data.imageUrl) {
+                        doc.update({
+                            gameNumber: data.gameNumber,
+                            points: data.points
+                        })
+                        dispatch(updateCatSuccess())
+                    }
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(updateCatError())
+            })
+    }
+}
+
+
+export const updateCat = (data) => (dispatch) => {
+    return dispatch(updateCatFighting(data))
+}

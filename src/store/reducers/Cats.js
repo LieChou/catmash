@@ -37,36 +37,35 @@ const cats = (state = {
             };
 
 
-        //////////////////////////// GET A CAT ////////////////////////////////
 
-        case types.GET_CAT_REQUESTED:
+        //////////////////////////// UPDATE CAT ////////////////////////////////
+
+        case types.UPDATE_CAT_REQUESTED:
             return {
                 ...state,
                 loading: true,
                 error: false
             };
 
-        case types.GET_CAT_ERROR:
+        case types.UPDATE_CAT_ERROR:
             return {
                 ...state,
                 loading: false,
                 error: true
             };
 
-        case types.GET_CAT_SUCCESS:
+        case types.UPDATE_CAT_SUCCESS:
+            let newCats = [...state.cats].map((cat) => (cat.id === action.cat.id ? action.cat.points && action.cat.gameNumber : cat));
             return {
                 ...state,
                 loading: false,
                 error: false,
-                cat: action.cat
-            };
+                cats: newCats
+            }
+
 
         default:
-            return state;
-
-
-        //////////////////////////// UPDATE CAT ////////////////////////////////
-
+            return state
 
     }
 

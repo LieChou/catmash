@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCats } from '../../store/action/creators/Cats';
+import { getCats, updateCat } from '../../store/action/creators/Cats';
 import VoteStyle from './Vote.module.scss';
+import EloRating from 'elo-rating';
 
 
 class Vote extends Component {
@@ -10,9 +11,8 @@ class Vote extends Component {
         super(props);
 
         this.state = {
-            cats: [],
-            cat1: [],
-            cat2: []
+            catWinner: {},
+            catLoser: {}
         }
     }
 
@@ -40,6 +40,41 @@ class Vote extends Component {
         )
     }
 
+    calculateScore = (catWinner, catLoser) => {
+        console.log(catWinner)
+        console.log(catLoser)
+
+        var { gameNumber: gameNumberWinner, points: winnerPoints, imageUrl: urlWinner } = catWinner;
+        var { gameNumber: gameNumberLoser, points: loserPoints, imageUrl: urlLoser } = catLoser;
+        console.log(gameNumberLoser, gameNumberWinner, loserPoints, winnerPoints, urlWinner, urlLoser)
+
+        // //calculate both new score with Elo Rating component
+        let result;
+        if (gameNumberWinner < 20) {
+            result = EloRating.calculate(winnerPoints, loserPoints, true, 20)
+        } else {
+            result = EloRating.calculate(winnerPoints, loserPoints, true, 40)
+        }
+        console.log(result);
+
+        //update database
+        //data construction for API call
+        var { playerRating, opponentRating } = result
+
+        let dataCatWinner = { number: gameNumberWinner, url: urlWinner, points: playerRating }
+        let dataCatLoser = { number: gameNumberLoser, url: urlLoser, points: opponentRating }
+        console.log(dataCatLoser, dataCatWinner)
+
+        //Api call
+        this.props.updateCat(dataCatWinner)
+        this.props.updateCat(dataCatLoser)
+
+        //relaunch voting
+
+    }
+
+
+
     goToRanking = () => {
         this.props.history.push('/rank');
     };
@@ -51,7 +86,6 @@ class Vote extends Component {
         const { cat1, cat2 } = this.getRandomCats();
         console.log(cat1)
         console.log(cat2)
-
         return (
 
             <div className={VoteStyle.container}>
@@ -65,14 +99,16 @@ class Vote extends Component {
                 </div>
 
                 <div className={VoteStyle.section1}>
-                    <button className={VoteStyle.picDiv}>
+                    <button className={VoteStyle.picDiv} onClick={() => { this.calculateScore(cat1, cat2) }}>
                         <img className={VoteStyle.picElement} alt="cat1" src={cat1.imageUrl} />
+                        <p>Nombre de points actuellement : {cat1.points}</p>
                     </button>
                 </div>
 
                 <div className={VoteStyle.section2}>
-                    <button className={VoteStyle.picDiv}>
+                    <button className={VoteStyle.picDiv} onClick={() => { this.calculateScore(cat2, cat1) }}>
                         <img className={VoteStyle.picElement} alt="cat1" src={cat2.imageUrl} />
+                        <p>Nombre de points actuellement : {cat2.points}</p>
                     </button>
                 </div>
 
@@ -93,6 +129,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     getCats: () => dispatch(getCats()),
+    updateCat: (data) => dispatch(updateCat(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Vote);

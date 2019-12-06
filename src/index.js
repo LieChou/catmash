@@ -9,9 +9,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import rootReducer from './store/reducers/RootReducer';
-// import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
-// import { reduxFirestore, getFirestore } from 'redux-firestore';
-// import db from './config/ConfigFirebase';
 
 const history = createHistory.createBrowserHistory();
 
@@ -20,8 +17,6 @@ const store = createStore(
     compose(
         applyMiddleware(thunk),
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-        // reduxFirestore(db),
-        // reactReduxFirebase(db)
     )
 )
 
