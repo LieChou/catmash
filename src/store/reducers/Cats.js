@@ -55,7 +55,7 @@ const cats = (state = {
             };
 
         case types.UPDATE_CAT_SUCCESS:
-            let newCats = [...state.cats].map((cat) => (cat.id === action.cat.id ? action.cat.points && action.cat.gameNumber : cat));
+            let newCats = [...state.cats].map((cat) => (cat.imageUrl === action.cat.imageUrl ? action.cat.points && action.cat.gameNumber : cat));
             return {
                 ...state,
                 loading: false,

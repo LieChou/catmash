@@ -80,10 +80,10 @@ const updateCatRequested = () => {
     }
 }
 
-const updateCatSuccess = (cats) => {
+const updateCatSuccess = (cat) => {
     return {
         type: types.UPDATE_CAT_SUCCESS,
-        cats: cats
+        cat: cat
     }
 }
 
@@ -97,17 +97,20 @@ const updateCatError = () => {
 const updateCatFighting = (data) => {
     return dispatch => {
         dispatch(updateCatRequested());
-        db.collection('cats').get()
-            .then(querySnapshot => {
-                querySnapshot.docs.map(doc => {
-                    if (doc.imageUrl === data.imageUrl) {
-                        doc.update({
-                            gameNumber: data.gameNumber,
-                            points: data.points
-                        })
-                        dispatch(updateCatSuccess())
-                    }
+        //get the id of the document in firebase
+        db.collection('cats').where('imageUrl', '==', data.imageUrl)
+            .get()
+            .then((query) => {
+                const cat = query.docs[0];
+                console.log(cat);
+                const catId = cat.id;
+                console.log(catId);
+                db.collection('cats').doc(catId).update({
+                    gameNumber: data.gameNumber + 1,
+                    points: data.points,
+                    imageUrl: data.imageUrl
                 })
+                dispatch(updateCatSuccess(data))
             })
             .catch((error) => {
                 console.log(error);

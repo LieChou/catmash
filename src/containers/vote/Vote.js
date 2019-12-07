@@ -61,8 +61,8 @@ class Vote extends Component {
         //data construction for API call
         var { playerRating, opponentRating } = result
 
-        let dataCatWinner = { number: gameNumberWinner, url: urlWinner, points: playerRating }
-        let dataCatLoser = { number: gameNumberLoser, url: urlLoser, points: opponentRating }
+        let dataCatWinner = { gameNumber: gameNumberWinner, imageUrl: urlWinner, points: playerRating }
+        let dataCatLoser = { gameNumber: gameNumberLoser, imageUrl: urlLoser, points: opponentRating }
         console.log(dataCatLoser, dataCatWinner)
 
         //Api call
@@ -101,14 +101,12 @@ class Vote extends Component {
                 <div className={VoteStyle.section1}>
                     <button className={VoteStyle.picDiv} onClick={() => { this.calculateScore(cat1, cat2) }}>
                         <img className={VoteStyle.picElement} alt="cat1" src={cat1.imageUrl} />
-                        <p>Nombre de points actuellement : {cat1.points}</p>
                     </button>
                 </div>
 
                 <div className={VoteStyle.section2}>
                     <button className={VoteStyle.picDiv} onClick={() => { this.calculateScore(cat2, cat1) }}>
                         <img className={VoteStyle.picElement} alt="cat1" src={cat2.imageUrl} />
-                        <p>Nombre de points actuellement : {cat2.points}</p>
                     </button>
                 </div>
 
