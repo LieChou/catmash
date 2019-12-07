@@ -11,7 +11,7 @@ const getAllCatsRequested = () => {
     }
 }
 
-const getAllCatsSucces = (cats) => {
+const getAllCatsSuccess = (cats) => {
     return {
         type: types.GET_ALL_CATS_SUCCESS,
         cats: cats
@@ -46,7 +46,7 @@ const getAllCats = () => {
                             let cat = doc.data();
                             cats.push(cat);
                         })
-                        dispatch(getAllCatsSucces(cats))
+                        dispatch(getAllCatsSuccess(cats))
                     })
                 }
                 db.collection('cats').get().then((snapshot) => {
@@ -55,7 +55,7 @@ const getAllCats = () => {
                         let cat = doc.data();
                         cats.push(cat);
                     })
-                    dispatch(getAllCatsSucces(cats))
+                    dispatch(getAllCatsSuccess(cats))
                 })
             })
             .catch((error) => {
@@ -105,12 +105,16 @@ const updateCatFighting = (data) => {
                 console.log(cat);
                 const catId = cat.id;
                 console.log(catId);
+                let gameNumber = data.gameNumber + 1;
+                let points = data.points;
+                let imageUrl = data.imageUrl
                 db.collection('cats').doc(catId).update({
-                    gameNumber: data.gameNumber + 1,
-                    points: data.points,
-                    imageUrl: data.imageUrl
+                    gameNumber: gameNumber,
+                    points: points,
+                    imageUrl: imageUrl,
                 })
-                dispatch(updateCatSuccess(data))
+                let newCat = { gameNumber, imageUrl, points }
+                dispatch(updateCatSuccess(newCat))
             })
             .catch((error) => {
                 console.log(error);

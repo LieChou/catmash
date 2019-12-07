@@ -27,17 +27,22 @@ class Vote extends Component {
 
         //take cat1 out to make sure it won't appear again
         let splicedCat = cats.splice(cat1Id, 1)[0];
-        let viewedCat = [];
-        viewedCat.push(splicedCat);
 
         //create random cat2
         let cat2Id = Math.floor(Math.random() * cats.length);
         let cat2 = cats[cat2Id];
         console.log(cat2);
         const randomCats = { cat1, cat2 }
+
+        //reset cats
+        cats.push(splicedCat)
+
+
         return (
             randomCats
         )
+
+
     }
 
     calculateScore = (catWinner, catLoser) => {
@@ -67,7 +72,7 @@ class Vote extends Component {
 
         //Api call
         this.props.updateCat(dataCatWinner)
-        this.props.updateCat(dataCatLoser)
+        //this.props.updateCat(dataCatLoser)
 
         //relaunch voting
 

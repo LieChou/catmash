@@ -5,8 +5,6 @@ const cats = (state = {
     loading: false,
     error: false,
     cats: null,
-    cat: null,
-    catSelected: null
 }, action) => {
 
     switch (action.type) {
@@ -55,7 +53,8 @@ const cats = (state = {
             };
 
         case types.UPDATE_CAT_SUCCESS:
-            let newCats = [...state.cats].map((cat) => (cat.imageUrl === action.cat.imageUrl ? action.cat.points && action.cat.gameNumber : cat));
+            let newCats = [...state.cats].map((cat) => (
+                cat.imageUrl === action.cat.imageUrl ? action.cat : cat));
             return {
                 ...state,
                 loading: false,
