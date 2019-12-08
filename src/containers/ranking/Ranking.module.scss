@@ -1,0 +1,117 @@
+$white: #FFFFFF;
+$grey: #F1F1F1;
+$strongGrey: #7F7F7F;
+$blue: #4bacc6;
+$black: #000000;
+
+.container{
+    min-height: 100vh;
+    width: 100%;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rankingContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+.titleDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.textDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.textElement{
+    width: 100%;
+    font: bold 18px Quicksand;
+    color: $blue;
+    margin: auto;
+    @media only screen and (max-width: 576px){
+        font: bold 14px Quicksand;
+        margin: auto;
+    }        
+}
+
+.titleElement{
+    font: bold 26px Quicksand;
+    color: $blue;
+    margin: auto;
+    @media only screen and (max-width: 576px){
+        font: bold 18px Quicksand;
+        margin: auto;
+    }        
+}
+
+.picDiv{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: $blue;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    margin: auto;
+    @media only screen and (min-width:577px) and (max-width: 992px){
+        width: 150px;
+        height: 150px;
+        }        
+    @media only screen and (max-width:576px){
+        width: 75px;
+        height: 75px;
+    }        
+}
+
+.boxSizing{
+margin-bottom: 5%;
+}
+
+.picElement{
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+}
+
+.returnButtonDiv{
+    box-sizing: border-box;
+    width: 180px;
+    height: 75px;    
+    padding: 15px;
+    margin: auto;
+    margin-bottom: 3%;
+    @media only screen and (max-width: 576px){
+        width: 160px;
+        height: 60px;
+        padding: 15px;
+        box-sizing: border-box;
+    }        
+}
+
+.returnButtonElement{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    font: bold 19px Quicksand;
+    letter-spacing: 0;
+    margin-bottom: 5px;
+    background-color: $blue;
+    color: $white;
+}

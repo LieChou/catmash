@@ -37,12 +37,9 @@ class Vote extends Component {
         //reset cats
         cats.push(splicedCat)
 
-
         return (
             randomCats
         )
-
-
     }
 
     calculateScore = (catWinner, catLoser) => {
