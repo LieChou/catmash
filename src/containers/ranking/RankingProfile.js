@@ -10,7 +10,7 @@ class RankingProfile extends Component {
                 <div className={RankingStyle.picDiv}>
                     <img className={RankingStyle.picElement} alt="cat" src={this.props.cat.imageUrl} />
                 </div>
-                <p className={RankingStyle.textElement}>Nombre de points : {this.props.cat.points}</p>
+                <p className={RankingStyle.textElement}>Score : {this.props.cat.points}</p>
             </div>
         )
     }
