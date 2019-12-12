@@ -9,8 +9,18 @@ class Ranking extends Component {
         this.props.history.push('/vote');
     };
 
+    getRankedCats = () => {
+        const { cats } = this.props;
+        //sort cats array elements and return a new array using a compare function
+        cats.sort((a, b) => {
+            return a.points < b.points ? 1 : -1;
+        })
+    }
+
+
 
     render() {
+        const newCats = this.getRankedCats();
         return (
             <div className={RankingStyle.container}>
                 <div className={RankingStyle.titleDiv}>
