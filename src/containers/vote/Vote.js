@@ -23,7 +23,6 @@ class Vote extends Component {
         //create random cat1
         let cat1Id = Math.floor(Math.random() * cats.length);
         let cat1 = cats[cat1Id];
-        console.log(cat1);
 
         //take cat1 out to make sure it won't appear again
         let splicedCat = cats.splice(cat1Id, 1)[0];
@@ -31,7 +30,6 @@ class Vote extends Component {
         //create random cat2
         let cat2Id = Math.floor(Math.random() * cats.length);
         let cat2 = cats[cat2Id];
-        console.log(cat2);
         const randomCats = { cat1, cat2 }
 
         //reset cats
@@ -43,21 +41,19 @@ class Vote extends Component {
     }
 
     calculateScore = (catWinner, catLoser) => {
-        console.log(catWinner)
-        console.log(catLoser)
 
         var { gameNumber: gameNumberWinner, points: winnerPoints, imageUrl: urlWinner } = catWinner;
         var { gameNumber: gameNumberLoser, points: loserPoints, imageUrl: urlLoser } = catLoser;
-        console.log(gameNumberLoser, gameNumberWinner, loserPoints, winnerPoints, urlWinner, urlLoser)
 
         // //calculate both new score with Elo Rating component
         let result;
-        if (gameNumberWinner < 20) {
+        if (gameNumberWinner < 31) {
+            result = EloRating.calculate(winnerPoints, loserPoints, true, 40)
+        } else if (winnerPoints < 2400) {
             result = EloRating.calculate(winnerPoints, loserPoints, true, 20)
         } else {
-            result = EloRating.calculate(winnerPoints, loserPoints, true, 40)
+            result = EloRating.calculate(winnerPoints, loserPoints, true, 10)
         }
-        console.log(result);
 
         //update database
         //data construction for API call
@@ -65,13 +61,10 @@ class Vote extends Component {
 
         let dataCatWinner = { gameNumber: gameNumberWinner, imageUrl: urlWinner, points: playerRating }
         let dataCatLoser = { gameNumber: gameNumberLoser, imageUrl: urlLoser, points: opponentRating }
-        console.log(dataCatLoser, dataCatWinner)
 
         //Api call
         this.props.updateCat(dataCatWinner)
-        //this.props.updateCat(dataCatLoser)
-
-        //relaunch voting
+        this.props.updateCat(dataCatLoser)
 
     }
 
@@ -84,10 +77,7 @@ class Vote extends Component {
 
 
     render() {
-        console.log(this.props.cats);
         const { cat1, cat2 } = this.getRandomCats();
-        console.log(cat1)
-        console.log(cat2)
         return (
 
             <div className={VoteStyle.container}>
