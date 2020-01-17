@@ -4,16 +4,15 @@ import * as firebase from 'firebase/app';
 require("firebase/firestore");
 
 // Your web app's Firebase configuration
-// Your web app's Firebase configuration
 var firebaseConfig = {
-    apiKey: "AIzaSyCxjn9u2z_D0bDdXu9sQKMbHGDwLp_1CiI",
-    authDomain: "atelier-catmash-beeef.firebaseapp.com",
-    databaseURL: "https://atelier-catmash-beeef.firebaseio.com",
-    projectId: "atelier-catmash-beeef",
-    storageBucket: "atelier-catmash-beeef.appspot.com",
-    messagingSenderId: "400822330359",
-    appId: "1:400822330359:web:cd398c4381560337ad04f2",
-    measurementId: "G-MCNVTNHV4M"
+    apiKey: "AIzaSyAt_5KZyvvo-398XzAwUaEDFJuKly9Z64Q",
+    authDomain: "catmash-268eb.firebaseapp.com",
+    databaseURL: "https://catmash-268eb.firebaseio.com",
+    projectId: "catmash-268eb",
+    storageBucket: "catmash-268eb.appspot.com",
+    messagingSenderId: "303967734539",
+    appId: "1:303967734539:web:d45572345bfa90eacb300e"
+    //measurementId: "G-MCNVTNHV4M"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -23,3 +22,4 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 
 export default db;
+
